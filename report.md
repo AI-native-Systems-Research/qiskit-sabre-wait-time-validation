@@ -2,8 +2,8 @@
 
 **PASS** — 96/96 cases; 2/2 self-checks.
 
-Revision: `72efe50ac12bd949970456cd59c46eaa812b3a72`. Seeds: `[0, 1, 42, 2, 7, 123]`.
-Run: 2026-10-20T16:00:42+00:00. Qiskit 2.6.0.dev0+72efe50; Python 3.11.8.
+Revision: `319fa5fa703bc924008db812f5ddfec6b56c38f7`. Seeds: `[0, 1, 42, 2, 7, 123]`.
+Run: 2026-10-20T19:38:45+00:00. Qiskit 2.6.0.dev0+319fa5f; Python 3.11.8.
 
 16 circuits, 10 qubits each; bidirectional line, trivial layout, one routing trial.
 Each output must match its original unitary (layout-aware, global phase kept, default tolerances), preserve width and layout metadata, and satisfy connectivity.

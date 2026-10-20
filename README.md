@@ -71,8 +71,10 @@ git -C ../qiskit-evolved rev-parse HEAD > qiskit-src/REVISION
 override output paths with `--out` and the reporter's input with `--results`.
 The runner enforces `QISKIT_PARALLEL=FALSE`.
 
-The recorded run uses the existing release build of revision
-`72efe50ac12bd949970456cd59c46eaa812b3a72`; its extension matches the local release
-artifact (SHA-256 `b019b47bb19dc956747134a85e33e467136614b7c2749ef54696ed4c4df6a5ff`).
+The recorded run uses revision `319fa5fa703bc924008db812f5ddfec6b56c38f7`, built
+from `qiskit-evolved` with
+`QISKIT_BUILD_PROFILE=release .venv/bin/python setup.py build_rust --inplace --release`.
+The loaded extension matches the local release artifact (SHA-256
+`b019b47bb19dc956747134a85e33e467136614b7c2749ef54696ed4c4df6a5ff`).
 Commit results and report together. These are routing checks for the selected
 circuits and seeds, not a general correctness proof.
