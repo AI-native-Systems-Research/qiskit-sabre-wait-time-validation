@@ -18,7 +18,24 @@ From this repository:
 Results go to `results/results.jsonl`; the short summary goes to `report.md`.
 Both scripts return nonzero on failure. The reporter also rejects incomplete
 or duplicate results. Exceptions, including Python-visible Rust panics, are failures.
-The self-checks must detect ignored layout metadata and an added X gate.
+
+## Self-checks
+
+The two self-checks are negative controls: they show the unitary comparison is
+strong enough to fail. Both start from the first passing case whose final
+permutation is not the identity (with an identity permutation, ignoring the
+layout would change nothing and the first check would be meaningless), break
+it on purpose, and pass only if the broken circuit no longer matches the reference:
+
+- **Ignored layout** (`ignoring_final_layout_must_fail`): build the operator with
+  `ignore_set_layout=True`, so the qubit permutation from routing SWAPs is not
+  undone. This confirms the layout metadata matters to the comparison.
+- **Extra X gate** (`extra_x_gate_must_fail`): append an X gate on physical
+  qubit 0 while still using the layout. This confirms a small gate-level
+  change is caught.
+
+If either broken circuit still matched, the checker would be too weak to trust,
+so the run fails.
 
 ## Circuits
 

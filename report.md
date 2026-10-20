@@ -29,7 +29,9 @@ Each output must match its original unitary (layout-aware, global phase kept, de
 
 Self-checks:
 
-- Ignored layout detected: PASS
-- Extra X gate detected: PASS
+Negative controls showing the unitary comparison can fail. Each takes a passing routed circuit whose final permutation is not the identity (`qft10` seed 0), breaks it on purpose, and passes only if the result no longer matches the reference.
+
+- Ignored layout detected: PASS — build the unitary with `ignore_set_layout=True`, so the SWAP permutation is not undone.
+- Extra X gate detected: PASS — append an X gate on physical qubit 0, keeping the layout.
 
 Scope: routing-only checks on these circuits and seeds, not a general proof. Raw results and build path: `results/results.jsonl`.

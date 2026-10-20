@@ -45,11 +45,23 @@ def main():
     for fixture in env["fixtures"]:
         passed = sum(r.get("passed") is True for r in cases if r["fixture"] == fixture)
         lines.append(f"| {fixture} | {passed}/{len(env['seeds'])} |")
-    lines += ["", "Self-checks:", ""]
-    for name, label in zip(CHECKS, ("Ignored layout detected", "Extra X gate detected")):
+    sample = next((r for r in checks if "fixture" in r), None)
+    source = f"`{sample['fixture']}` seed {sample['seed']}" if sample else "a passing case"
+    lines += [
+        "", "Self-checks:", "",
+        "Negative controls showing the unitary comparison can fail. Each takes a passing "
+        f"routed circuit whose final permutation is not the identity ({source}), breaks it "
+        "on purpose, and passes only if the result no longer matches the reference.", "",
+    ]
+    labels = (
+        ("Ignored layout detected", "build the unitary with `ignore_set_layout=True`, "
+         "so the SWAP permutation is not undone"),
+        ("Extra X gate detected", "append an X gate on physical qubit 0, keeping the layout"),
+    )
+    for name, (label, detail) in zip(CHECKS, labels):
         matches = [r for r in checks if r["name"] == name]
         passed = len(matches) == 1 and matches[0].get("passed") is True and not matches[0].get("error")
-        lines.append(f"- {label}: {'PASS' if passed else 'FAIL'}")
+        lines.append(f"- {label}: {'PASS' if passed else 'FAIL'} — {detail}.")
     if not complete:
         lines += ["", "FAIL: missing, duplicate, or unexpected results/settings."]
     for rec in failed:
